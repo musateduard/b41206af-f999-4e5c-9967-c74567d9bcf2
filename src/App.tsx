@@ -40,17 +40,26 @@ export default function App(): ReactElement {
         []);
 
     let html: ReactElement =
+
         <Fragment>
+
             <TopBar />
+
             <main>
-                <section className='EventList'>
-                    <ul>
-                        {events.map((item: any, index: Key) => {return <EventItem key={index} {...item} />})}
-                    </ul>
+
+                <section
+                    className='EventList'>
+
+                    <ul>{events.map((item: any, index: Key) => {return <EventItem key={index} {...item} />})}</ul>
+
                 </section>
+
             </main>
+
             <footer className='Footer'>footer</footer>
+
             <ShoppingCart />
+
         </Fragment>
 
     return html;}
