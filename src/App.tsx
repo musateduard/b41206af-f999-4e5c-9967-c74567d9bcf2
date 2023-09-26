@@ -1,8 +1,25 @@
+// css imports
 import './App.scss';
+
+// react imports
 import React, { Fragment, Key, ReactElement, useEffect, useState } from 'react';
-import TopBar from './components/TopBar';
+
+// components
 import EventItem from './components/EventItem';
+import TopBar from './components/TopBar';
 import ShoppingCart from './components/ShoppingCart';
+
+// material ui imports
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import { CardActions, CardContent, CardHeader, Container } from '@mui/material';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import { styled, alpha } from "@mui/material/styles";
+import Typography from '@mui/material/Typography';
+
+// types
 import {EventItemData} from "./types";
 
 
@@ -45,20 +62,16 @@ export default function App(): ReactElement {
 
             <TopBar />
 
-            <main>
+            <Box
+                component={"main"}
+                display={"flex"}
+                flexDirection={"column"}
+                justifyContent={"space-between"}
+                padding={2}>
 
-                <section
-                    className='EventList'>
+                {events.map((item: EventItemData, index: Key) => {return <EventItem key={index} {...item} />})}
 
-                    <ul>{events.map((item: any, index: Key) => {return <EventItem key={index} {...item} />})}</ul>
-
-                </section>
-
-            </main>
-
-            <footer className='Footer'>footer</footer>
-
-            <ShoppingCart />
+            </Box>
 
         </Fragment>
 
