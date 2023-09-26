@@ -2,7 +2,7 @@
 import "./TopBar.scss";
 
 // react imports
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 
 // material ui components
 import { styled, alpha } from "@mui/material/styles";
@@ -13,6 +13,7 @@ import IconButton from "@mui/material/IconButton";
 import InputBase from "@mui/material/InputBase";
 
 // material ui icons
+import Drawer from "@mui/material/Drawer";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
@@ -46,6 +47,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
+
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
@@ -62,14 +64,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function TopBar(): ReactElement {
 
+    const [cart, setCart] = useState<boolean>(false);
+
     let html: ReactElement =
 
         <AppBar
             position="sticky">
 
             <Toolbar
-                sx={{
-                    justifyContent: "space-between"}}>
+                sx={{justifyContent: "space-between"}}>
 
                 <Search>
 
@@ -83,19 +86,23 @@ export default function TopBar(): ReactElement {
 
                 </Search>
 
-                <IconButton color="inherit">
-                    <ShoppingCartIcon></ShoppingCartIcon>
+                <Drawer
+                    anchor="right"
+                    open={cart}
+                    onClose={() => {setCart(false)}}>
+
+                    this is the shopping cart
+                </Drawer>
+
+                <IconButton
+                    color="inherit"
+                    onClick={() => setCart(true)}>
+
+                    <ShoppingCartIcon />
                 </IconButton>
 
             </Toolbar>
 
         </AppBar>
-
-        // <header className={TopBar.name}>
-        //     <input type="text" placeholder="search event..." />
-        //     <button>
-        //         <ShoppingCartIcon></ShoppingCartIcon>
-        //     </button>
-        // </header>
 
     return html;}
