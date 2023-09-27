@@ -8,14 +8,17 @@ import { ReactElement, useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import AppBar from "@mui/material/AppBar";
+import Drawer from "@mui/material/Drawer";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import InputBase from "@mui/material/InputBase";
 
 // material ui icons
-import Drawer from "@mui/material/Drawer";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+
+// types
+import { EventItemData } from "../types";
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -62,11 +65,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 
-export default function TopBar(): ReactElement {
+export default function TopBar(props: {cartItems: EventItemData[]}): ReactElement {
 
-    const [cart, setCart] = useState<boolean>(false);
+    const cartItems: EventItemData[] = props.cartItems;
 
-    let html: ReactElement =
+    const [cartToggled, setCartToggled] = useState<boolean>(false);
+
+    const html: ReactElement =
 
         <AppBar
             position="sticky">
@@ -88,15 +93,17 @@ export default function TopBar(): ReactElement {
 
                 <Drawer
                     anchor="right"
-                    open={cart}
-                    onClose={() => {setCart(false)}}>
+                    open={cartToggled}
+                    onClose={(event, reason): void => {setCartToggled(false)}}>
 
-                    this is the shopping cart
+                    <p>this is the shopping cart</p>
+                    <p>here go all the items in the shopping cart list</p>
+                    <p>type of cartItems: {typeof(cartItems)}</p>
                 </Drawer>
 
                 <IconButton
                     color="inherit"
-                    onClick={() => setCart(true)}>
+                    onClick={(event): void => {setCartToggled(true)}}>
 
                     <ShoppingCartIcon />
                 </IconButton>
