@@ -25,10 +25,12 @@ import {EventItemData} from "./types";
 
 export default function App(): ReactElement {
 
-    let [events, setEvents] = useState<EventItemData[]>([]);
+    const [events, setEvents] = useState<EventItemData[]>([]);  // list of events retrieved from api
 
-    /** function that fetches list of events from api */
-    const get_events: Function = async function(controller: AbortController): Promise<void> {
+    const [cartItems, setCartItems] = useState<EventItemData[]>([]);  // items added to cart
+
+    /** function that fetches events list from api */
+    const getEvents: Function = async function(controller: AbortController): Promise<void> {
 
         try {
             const response: Response = await fetch("https://teclead-ventures.github.io/data/london-events.json", {signal: controller.signal});
@@ -49,18 +51,19 @@ export default function App(): ReactElement {
         // effect handler
         () => {
             const controller: AbortController = new AbortController();
-            get_events(controller);
+            getEvents(controller);
             return () => {controller.abort()};
         },
 
         // dependency array
         []);
 
-    let html: ReactElement =
+    const html: ReactElement =
 
         <Fragment>
 
-            <TopBar />
+            <TopBar cartItems={cartItems} />
+            <p>cartItems is: {typeof(cartItems)}</p>
 
             <Box
                 component={"main"}
@@ -69,7 +72,7 @@ export default function App(): ReactElement {
                 justifyContent={"space-between"}
                 padding={2}>
 
-                {events.map((item: EventItemData, index: Key) => {return <EventItem key={index} {...item} />})}
+                {events.map((item: EventItemData, index: Key): ReactElement => {return <EventItem key={index} event={item} setCartItems={setCartItems} />})}
 
             </Box>
 
