@@ -1,8 +1,8 @@
 // css imports
-import "./EventItem.scss"
+import "./EventItem.scss";
 
 // react imports
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 
 // material components
 import Box from '@mui/material/Box';
@@ -20,9 +20,29 @@ import AddCircle from "@mui/icons-material/AddCircle";
 import { EventItemData } from "../types";
 
 
-export default function EventItem(event: EventItemData): ReactElement {
+export default function EventItem(props: {event: EventItemData, setCartItems: Function}): ReactElement {
 
-    let html: ReactElement =
+    const event: EventItemData = props.event;
+    const setCartItems: Function = props.setCartItems;
+
+    const [inCart, setInCart] = useState<boolean>(false);
+
+    /** function that updates cart list when item is added */
+    const addToCart: Function = function(): void {
+
+        console.log(`inCart: ${inCart}`);
+
+        if (inCart) {
+            console.log("item already in cart");}
+
+        else {
+            setInCart(true);
+            setCartItems((items: EventItemData[]) => {return items.push(event)});
+            console.log("added to cart");}
+
+        return;}
+
+    const html: ReactElement =
 
         <Card
             sx={{
@@ -37,7 +57,8 @@ export default function EventItem(event: EventItemData): ReactElement {
 
                 <Button
                     variant="contained"
-                    endIcon={<AddCircle />}>
+                    endIcon={<AddCircle />}
+                    onClick={(event): void => {addToCart()}}>
 
                     Add to Cart
                 </Button>
