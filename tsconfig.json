@@ -3,8 +3,8 @@
 
         // import settings
         "target": "ES6",
-        "module": "ESNext",
-        "moduleResolution": "Node",
+        "module": "Node16",
+        "moduleResolution": "Node16",
         "esModuleInterop": true,
         "allowJs": true,
         "allowSyntheticDefaultImports": true,
@@ -24,6 +24,7 @@
         "noEmit": true,
         "jsx": "react-jsx"
     },
+
     "include": [
         "src"
     ]
